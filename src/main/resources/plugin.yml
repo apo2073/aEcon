@@ -1,0 +1,29 @@
+name: aEcon
+version: ${version}
+main: kr.apo2073.aEcon.AEcon
+api-version: '1.13'
+author: 아포칼립스
+prefix: aEcon
+depend: [Vault]
+softdepend: [PlaceholderAPI]
+loadbefore: [Vault]
+commands:
+  eco:
+    description: aEcon economy commands
+    usage: /eco [<arg>] [<player>] [<amount>]
+
+permissions:
+  econ.*:
+    description: aEcon every permissions
+    children:
+      econ.eco: true
+      econ.money: true
+  econ.eco:
+    description: aEcon '/eco' command permission
+    default: op
+  econ.money:
+    description: aEcon '/money' command permission
+    default: not op
+
+libraries:
+  - org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.1.0

@@ -1,0 +1,5 @@
+lang: ko
+
+money-unit: "₩" # KRW
+
+prefix: "<b><gradient:#C9E4CB:#50E27E>[ aEcon ]</gradient></b>"
