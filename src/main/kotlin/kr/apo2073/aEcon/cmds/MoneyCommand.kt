@@ -4,16 +4,20 @@ import kr.apo2073.aEcon.AEcon
 import kr.apo2073.aEcon.utilities.Messages.translate
 import kr.apo2073.aEcon.utilities.sendMessage
 import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.format.NamedTextColor
-import net.kyori.adventure.text.format.TextDecoration
 import org.bukkit.Bukkit
-import org.bukkit.OfflinePlayer
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.command.TabExecutor
 import org.bukkit.entity.Player
+import org.bukkit.plugin.java.JavaPlugin
 
-class MoneyCommand:TabExecutor {
+class MoneyCommand(plugin: JavaPlugin):TabExecutor {
+    init {
+        plugin.getCommand("money")?.apply {
+            setExecutor(this@MoneyCommand)
+            tabCompleter= this@MoneyCommand
+        }
+    }
     private val econ= AEcon.econ
     override fun onCommand(
         sender: CommandSender,
@@ -21,8 +25,24 @@ class MoneyCommand:TabExecutor {
         label: String,
         args: Array<out String>
     ): Boolean {
+        if (sender !is Player) {return true}
         if (args.isEmpty()) return false
-        sender.sendMessage(Component.text(translate("not.support"), NamedTextColor.WHITE, TextDecoration.BOLD), true)
+        if (args[0]=="bal") {
+            performBal(sender)
+            return true
+        }
+        if (args.size<3) {sendUsage(sender);return true}
+        val player=Bukkit.getPlayer(args[1]) ?: run {
+            sender.sendMessage(Component.text(translate("not.found.player")), true)
+            return true
+        }
+        val amount=args[2].toDoubleOrNull() ?: run {
+            sender.sendMessage(Component.text(translate("enter.correct.value")), true)
+            return true
+        }
+        if (args[0]=="send") {
+            performSend(sender, player, amount)
+        }
         return true
     }
 
@@ -30,8 +50,22 @@ class MoneyCommand:TabExecutor {
         if (!econ.has(sender, amount)) {sender.sendMessage(Component.text(translate("no.enough.money")));return}
         econ.withdrawPlayer(sender, amount)
         econ.depositPlayer(player, amount)
-        sender.sendMessage(Component.text(translate("command.money.send.sender").replace("{player}", sender.name)))
-        player.sendMessage(Component.text(translate("command.money.send.recipient").replace("{player}", player.name)))
+        sender.sendMessage(Component.text(translate("command.money.send.sender").replace("{player}", sender.name)), true)
+        player.sendMessage(Component.text(translate("command.money.send.recipient").replace("{player}", player.name)), true)
+    }
+
+    private fun performBal(sender: Player) {
+        sender.sendMessage(
+            Component.text(translate("command.money.bal").replace("{amount}", econ.getBalance(sender).toString())),
+            true
+        )
+    }
+
+    private fun sendUsage(sender: CommandSender) {
+        val message= translate("command.money.usage").split("|")
+        message.forEach {
+            sender.sendMessage(Component.text(it), true)
+        }
     }
 
     override fun onTabComplete(
@@ -44,6 +78,7 @@ class MoneyCommand:TabExecutor {
         if (args.size==1) {
             tab.apply {
                 add("send")
+                add("bal")
             }
         } else if (args.size==2) {
             Bukkit.getOnlinePlayers().forEach { tab.add(it.name) }

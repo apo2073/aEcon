@@ -40,6 +40,7 @@ tasks.build {
 
 tasks.shadowJar {
     archiveFileName.set("aEcon-${version}.jar")
+    destinationDirectory=file("C:\\Users\\PC\\Desktop\\Test_Server\\plugins")
     archiveClassifier.set("")
     mergeServiceFiles()
     dependencies {

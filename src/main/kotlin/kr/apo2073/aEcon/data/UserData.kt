@@ -15,14 +15,14 @@ class UserData(private val player: OfflinePlayer) {
     init {
         file = File("${plugin.dataFolder}/userdata", "${player.uniqueId}.yml")
         config = YamlConfiguration.loadConfiguration(file)
-        money = config.getDouble("money")
+        money = config.getDouble("econ.money")
         plugin.reloadConfig()
     }
 
     fun get(): YamlConfiguration = config
     fun set() {
         try {
-            config.set("money", money)
+            config.set("econ.money", money)
             config.save(file)
         } catch (e: Exception) {
             e.printStackTrace()

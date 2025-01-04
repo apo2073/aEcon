@@ -1,7 +1,7 @@
 name: aEcon
 version: ${version}
 main: kr.apo2073.aEcon.AEcon
-api-version: '1.13'
+api-version: '1.17'
 author: 아포칼립스
 prefix: aEcon
 depend: [Vault]
@@ -11,6 +11,9 @@ commands:
   eco:
     description: aEcon economy commands
     usage: /eco [<arg>] [<player>] [<amount>]
+  money:
+    description: aEcon user economy commands
+    usage: /money [<arg>] [<player>] [<amount>]
 
 permissions:
   econ.*:

@@ -16,6 +16,8 @@
   "command.eco.take": "",
   "command.eco.reset": "",
   "command.eco.set": "",
+  "command.money.usage": "/money [<args>] [<args>]",
   "command.money.send.sender": "{player}님에게 {amount}{unit}을 보냈습니다",
-  "command.money.send.recipient": "{player}님이 {amount}{unit}을 보냈습니다"
+  "command.money.send.recipient": "{player}님이 {amount}{unit}을 보냈습니다",
+  "command.money.bal": "보유 금액 : {amount}{unit}"
 }
