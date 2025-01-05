@@ -11,12 +11,14 @@ import org.bukkit.plugin.java.JavaPlugin
 class AEcon : JavaPlugin() {
     companion object {
         lateinit var instance: AEcon
+            private set
         lateinit var econ: Economy
+            private set
     }
     private val pluginId=24260
     override fun onEnable() {
         instance = this
-        saveResource("languages/ko.json", false)
+        saveResource("languages/ko.json", /*false*/true)
 //        saveResource("languages/en.json", false)
         saveDefaultConfig()
 

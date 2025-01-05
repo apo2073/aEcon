@@ -50,8 +50,10 @@ class MoneyCommand(plugin: JavaPlugin):TabExecutor {
         if (!econ.has(sender, amount)) {sender.sendMessage(Component.text(translate("no.enough.money")));return}
         econ.withdrawPlayer(sender, amount)
         econ.depositPlayer(player, amount)
-        sender.sendMessage(Component.text(translate("command.money.send.sender").replace("{player}", sender.name)), true)
-        player.sendMessage(Component.text(translate("command.money.send.recipient").replace("{player}", player.name)), true)
+        sender.sendMessage(Component.text(translate("command.money.send.sender")
+            .replace("{player}", sender.name).replace("{amount}", amount.toString())), true)
+        player.sendMessage(Component.text(translate("command.money.send.recipient")
+            .replace("{player}", player.name).replace("{amount}", amount.toString())), true)
     }
 
     private fun performBal(sender: Player) {
