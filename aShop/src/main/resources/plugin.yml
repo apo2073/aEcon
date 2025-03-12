@@ -1,0 +1,6 @@
+name: aShop
+version: '1.0'
+main: kr.apo2073.aShop.AShop
+api-version: '1.21'
+prefix: Nicks
+authors: [아포칼립스]

@@ -1,0 +1,10 @@
+shop:
+  name: '&aCustom Shop'
+  line: 6
+
+  page:
+    '1':
+      '32': ItemStack1
+    '2':
+      '0': ItemStack2
+      '2': ItemStack3
