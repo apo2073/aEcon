@@ -62,7 +62,7 @@ class Shop(shop: String, line:Int?=null) {
         for (i in 0..inv.contents.size) {
             config.set("shop.page.$page.$i", inv.contents[i])
         }
-        config.save(file)
+        config.save(file) // ▼▲
     }
 
     fun getPage(page: Int):Inventory? {
@@ -95,6 +95,8 @@ class Shop(shop: String, line:Int?=null) {
         }
         return inv
     }
+
+    fun getName():String = name
 
     fun open(player:Player) {
         player.openInventory(shopInvHolder.getInventory())
