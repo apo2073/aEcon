@@ -4,7 +4,9 @@ shop:
 
   page:
     '1':
+      title: "-"
       '32': ItemStack1
     '2':
+      title: "+"
       '0': ItemStack2
       '2': ItemStack3

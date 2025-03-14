@@ -16,11 +16,15 @@ class ShopAddItemHolder(private val shopItem: ShopItemManager, private val itemS
 
     @EventHandler
     fun InventoryClickEvent.onClick() {
-
+        if (inventory.holder !is  ShopAddItemHolder) return
+        isCancelled=true
     }
 
     override fun getInventory(): Inventory {
-
+        inv.setItem(10, itemStack)
+        inv.setItem(12, null) //가격
+        inv.setItem(13, null) //재고
+        inv.setItem(14, null) // 완료
         return inv
     }
 }

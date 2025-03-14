@@ -24,10 +24,7 @@ class Shop(shop: String, line:Int?=null) {
         if (line != null) config.set("shop.line", line)
         if (config.getString("shop.name")==null) config.set("shop.name", shop)
         config.save(file)
-        shopInvHolder.inventory = Bukkit.createInventory(
-            shopInvHolder, 9 * config.getInt("shop.line", 6),
-            shop.str2Component()
-        ).apply {
+        shopInvHolder.inventory=getPage(1)?.apply {
             this.setItem(
                 shopInvHolder.getInventory().size-1,
                 ItemStack(Material.LIME_STAINED_GLASS_PANE).apply {
@@ -48,7 +45,11 @@ class Shop(shop: String, line:Int?=null) {
                     this.itemMeta=meta
                 }
             )
-        }
+        } ?: Bukkit.createInventory(
+            shopInvHolder, 9 * config.getInt("shop.line", 6),
+            config.getString("shop.page.1.title")?.str2Component()
+                ?: config.getString("shop.name")!!.str2Component()
+        )
     }
 
     private fun reload() {
@@ -67,6 +68,11 @@ class Shop(shop: String, line:Int?=null) {
 
     fun getPage(page: Int):Inventory? {
         reload()
+        shopInvHolder.inventory=Bukkit.createInventory(
+            shopInvHolder, 9 * config.getInt("shop.line", 6),
+            config.getString("shop.page.$page.title")?.str2Component()
+                ?: config.getString("shop.name")!!.str2Component()
+        )
         val inv=shopInvHolder.getInventory()
         val pages=config.getConfigurationSection("shop.page.${page}") ?: return null
         for (slot in pages.getKeys(false)) {
